@@ -6,7 +6,7 @@ info:
         This an API for accessing data from imSMART CMS. 
         The new Webclient use this API for its operation.
         All the endpoints of this API requier to be HTTPS. 
-        The base URL for all requests is http://macs-demo-dev.macs.local/webclientapi/api/.
+        The base URL for all requests is https://imsmart-staging.comparenetworks.com/webclientapi/api/.
   contact:
     email: imsmart@calcey.com
 host: imsmart-staging.comparenetworks.com
@@ -14,6 +14,18 @@ basePath: /webclientapi
 schemes:
   - https
 securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+    
   Bearer:
     type: apiKey
     name: Authorization
@@ -30,8 +42,8 @@ securityDefinitions:
 paths:
   /auth/imsmart:
     post:
-      summary: Authenticate the user
-      description: Sets the authentication cookie based on the authentication code, after validating the authentication code
+      summary: Authenticate User
+      description: Authenticates the user by checking the provided authentication token for validity.
       tags:
         - Auth
       operationId: AuthenticateUser
@@ -48,21 +60,21 @@ paths:
         - text/xml
       parameters:
         - name: authCode
-          description: The authentication token to validate the user
+          description: The authentication token to validate the user.
           in: body
           required: true
           schema:
             $ref: '#/definitions/OAuthCode'
       responses:
         '200':
-          description: Generated the authentication cookie according to the token received 
+          description: TO BE VERIFIED AND UPDATED
           schema:
             $ref: '#/definitions/Object'
       deprecated: false
   '/api/{version}/Items/{id}':
     get:
-      summary: Gets the item object from the CMS
-      description: Gets a single item object specified by the item Id from the CMS.
+      summary: Get Item
+      description: Gets a single item object for the specified item Id from the CMS.
       security:
         - Bearer: []
       tags:
@@ -76,13 +88,13 @@ paths:
         - text/xml
       parameters:
         - name: id
-          description: The Id of the item to be received from the CMS. This parameter is required.
+          description: The id of the item to be retrieved.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version to be used to get the data. This parameter is required.
+          description: The API version to be used.
           in: path
           required: true
           type: string
@@ -92,18 +104,16 @@ paths:
           required: true
       responses:
         '200':
-          description: Instance of the item specified by the item Id.
+          description: The details of the item with the provided id.
           schema:
             $ref: '#/definitions/ItemDto'
         '404':
-          description: |
-            This endpoint will throw a 404 error, when the given asset Id is not related to an Item in the CMS or
-            The specified item is a hiddne item or the the item is only viewable from a tablet.
+          description: When the provided id does not relate to an item, or if the item is hidden, or only viewable from a tablet device.
       deprecated: false
   '/api/{version}/Items/{parentId}/Children':
     get:
-      summary: Gets the childrens of the parent item
-      description: Gets a collection of items by its parent item Id.
+      summary: Get Child Items
+      description: Gets the child items (if any) of the provided item id.
       security:
         - Bearer: []
       tags:
@@ -117,19 +127,19 @@ paths:
         - text/xml
       parameters:
         - name: parentId
-          description: The parent item Id of child items to be received. This parameter is required.
+          description: The id of the parent item.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version to be used to get the data. This parameter is required.
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: List of child items of specified by the parent item Id.
+          description: List of child items for the specified parent item id.
           schema:
             type: array
             items:
@@ -137,8 +147,8 @@ paths:
       deprecated: false
   '/api/{version}/Items/{itemId}/ItemLinks':
     get:
-      summary: Gets the image links for the item
-      description: Gets the image links for the item specified by the item Id.
+      summary: Get Image Links
+      description: Gets the image links for the item specified by the item id.
       security:
         - Bearer: []
       tags:
@@ -152,28 +162,26 @@ paths:
         - text/xml
       parameters:
         - name: itemId
-          description: The item Id of the item, image links to be retrieved from the CMS. This parameter is required.
+          description: The id of the item whose image links are to be retrieved.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version to be used to get the data. This parameter is required.
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: Image links of the item specified by the item Id
+          description: Image links of the item specified by the item id.
           schema:
             $ref: '#/definitions/ItemLinkDto'
       deprecated: false
   '/api/{version}/Items/{itemId}/ItemAccessibility':
     get:
-      summary: Gets the status of user's accessibility of the item 
-      description: |
-          Gets the status of the item whether the user can access the given item or not.
-          Returns true if the user can access the specified item, otherwisw false.
+      summary: Get Item Accessibility
+      description: Gets the accessibility status of the item for the authenticated user.
       security:
         - Bearer: []
       tags:
@@ -187,28 +195,26 @@ paths:
         - text/xml
       parameters:
         - name: itemId
-          description: Id of the item, user requesting the access status. This parameter is required.
+          description: The id of the item whose accessibility is required.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version to be used to get the data. This parameter is required.
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: true if the user is allowed to access the given item, otherwise false
+          description: True if the user is allowed to access the given item, otherwise False
           schema:
             $ref: '#/definitions/AccessibilityStatus'
       deprecated: false
   '/api/{version}/Items/{itemId}/CreateCrocodocSession':
     get:
-      summary: Creates a Crocodoc session for the item
-      description: |
-          Creates a Crocodoc session for the provided item Id by uploading the item to the Crocodoc service. 
-          The item should be associated to the current user. If the session creation is success, returns the created session details.
+      summary: Get Crocodoc Session
+      description: Gets a created Crocodoc session for the item with the provided item id. The item should be associated to the authenticated user.
       security:
         - Bearer: []
       tags:
@@ -222,13 +228,13 @@ paths:
         - text/xml
       parameters:
         - name: itemId
-          description: Item Id of the item, the crocodoc session to be created. This parameter is required.
+          description: The item id for the Crocodoc session.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version to be used to get the data. This parameter is required.
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
@@ -238,14 +244,13 @@ paths:
           schema:
             $ref: '#/definitions/ItemCrocodocSessionDto'
         '400':
-          description: |
-            If given item not contains a file, endpoing will return a 400 error.
+          description: Thrown if the item does not contain a file.
       deprecated: false
   '/api/{version}/Items/{itemId}/GetAssetEmailLink':
     get:
-      summary: Gets the Download URL for an item
+      summary: Get Download URL
       description:
-          Gets the Download URL for an item, specified by the item Id
+          Gets the Download URL for an item specified by the item id.
       security:
         - Bearer: []
       tags:
@@ -259,27 +264,27 @@ paths:
         - text/xml
       parameters:
         - name: itemId
-          description: The item Id of the item, download link to be created.
+          description: The item id whose download URL is required.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: Download URL of the item, specified by the item Id
+          description: Download URL of the item specified by the item id.
           schema:
             $ref: '#/definitions/ItemDownloadLinkDto'
       deprecated: false
   '/api/{version}/Items/FilterCategories':
     post:
-      summary: Gets the item filter categories list
+      summary: Get Item Filter Categories
       description:
-          Gets the item filter categories list for the segment specified by the segment Id
+          Gets the item filter categories for the segment specified by the segment id.
       security:
         - Bearer: []
       tags:
@@ -296,7 +301,7 @@ paths:
         - text/json
       parameters:
         - name: segmentId
-          description: The segment Ids of the segments, the item filter categories to be received
+          description: The segment ids of the segments for which the item filter categories are required.
           in: body
           required: true
           schema:
@@ -305,25 +310,25 @@ paths:
               type: integer
               format: int32
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: The list of item filter categories for the segment specified by the segment Id
+          description: The item filter categories for the segment(s) specified by the segment id(s).
           schema:
             $ref: '#/definitions/ItemFilterCategoryDto'
       deprecated: false
   '/api/{version}/Items/Search':
     post:
-      summary: Gets the items matching the search criteria
-      description: Gets items matching the search criteria, from the items associated to the current user
+      summary: Perform Search [PENDING MODIFICATIONS BY DEVS]
+      description: Performs a search based on the provided search criteria on the items associated to the authenticated user.
       security:
         - Bearer: []
       tags:
         - Items
-      operationId: SearchItems
+      operationId: Search
       consumes: 
         - application/json
         - text/json
@@ -337,31 +342,31 @@ paths:
         - text/xml
       parameters:
         - name: filterOptions
-          description: The filter criteria to be filtered.
+          description: The filtering criteria.
           in: body
           required: true
           schema:
             $ref: '#/definitions/ItemFiltersDto'
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: Collection of items matched to the user search criteria
+          description: Collection of items associated to the authenticated user that matched to the search criteria
           schema:
             $ref: '#/definitions/WebClientItemDto'
       deprecated: false
   '/api/{version}/Items/Library':
     post:
-      summary: Gets the items matching the filter criteria
+      summary: Gets the items matching the filter criteria [PENDING MODIFICATIONS BY DEVS]
       description: Gets items matching the filter criteria, from the items associated to the current user
       security:
         - Bearer: []
       tags:
         - Items
-      operationId: FilterItems
+      operationId: Library
       consumes: 
         - application/json
         - text/json
@@ -393,8 +398,8 @@ paths:
       deprecated: false
   '/api/{version}/Items/{segmentId}/SegmentItems':
     get:
-      summary: Gets the segments child items
-      description: Get child items for the given segment
+      summary: Get Segment Items
+      description: Gets the child items for the given segment.
       security:
         - Bearer: []
       tags:
@@ -408,13 +413,13 @@ paths:
         - text/xml
       parameters:
         - name: segmentId
-          description: The segment Id of the segment, child items to be received
+          description: The segment id whose child items need to be retrieved.
           in: path
           required: true
           type: integer
           format: int32
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
@@ -426,8 +431,8 @@ paths:
       deprecated: false
   '/api/{version}/ItemUserData':
     get:
-      summary: Gets the current user's item user data
-      description: Gets the collection of item user data for the current user
+      summary: Get Item User Data
+      description: Gets the item user data collection for the authenticated user.
       security:
         - Bearer: []
       tags:
@@ -441,20 +446,20 @@ paths:
         - text/xml
       parameters:
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: Collection of item user data of the current user
+          description: Item user data collection for the authenticated user.
           schema:
             $ref: '#/definitions/ItemCollection'
       deprecated: false
   '/api/{version}/Organization':
     get:
-      summary: Gets the organization details
-      description: Gets the current organization Name
+      summary: Get Organization
+      description: Gets the organization details of the authenticated user.
       security:
         - Bearer: []
       tags:
@@ -468,20 +473,20 @@ paths:
         - text/xml
       parameters:
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: The organization details
+          description: The organization details of the authenticated user.
           schema:
             $ref: '#/definitions/OrganizationDetails'
       deprecated: false
   '/api/{version}/OrganizationSettings':
     post:
-      summary: Gets the organization settings
-      description: Gets the current organization's setting details
+      summary: Get Organization Settings
+      description: Gets organization settings of the authenticated user.
       security:
         - Bearer: []
       tags:
@@ -500,7 +505,7 @@ paths:
         - text/xml
       parameters:
         - name: organizationSettingsKeys
-          description: The organization setting keys to be received.
+          description: The organization setting keys to be retrieved.
           in: body
           required: true
           schema:
@@ -510,13 +515,13 @@ paths:
               items:
                 type: string
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: The organization setting details
+          description: The organization settings of the authenticated user.
           schema:
             type: object
             additionalProperties:
@@ -525,8 +530,8 @@ paths:
       deprecated: false
   '/api/{version}/OrganizationUserSettings':
     post:
-      summary: Gets the organization user settings
-      description: Gets the current organization's user setting details
+      summary: Get Organization User Settings
+      description: Gets the authenticated user's organization and user settings.
       security:
         - Bearer: []
       tags:
@@ -545,7 +550,7 @@ paths:
         - text/xml
       parameters:
         - name: organizationUserSettingsKeys
-          description: The filter criteria to be filtered.
+          description: The setting keys to be retrieved.
           in: body
           required: true
           schema:
@@ -555,13 +560,13 @@ paths:
               items:
                 type: string
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: The organization setting with user specific settings
+          description: The authenticated user's organization and user settings.
           schema:
             type: object
             additionalProperties:
@@ -569,8 +574,8 @@ paths:
       deprecated: false
   '/api/{version}/Segments':
     get:
-      summary: Gets the current user's segments
-      description: Gets the segments associated to the current user
+      summary: Get Segments
+      description: Gets the segments associated to the authenticated user.
       security:
         - Bearer: []
       tags:
@@ -584,13 +589,13 @@ paths:
         - text/xml
       parameters:
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
       responses:
         '200':
-          description: Collection of segments associated to the current user
+          description: The segments associated to the authenticated user.
           schema:
             type: array
             items:
