@@ -1064,10 +1064,12 @@ definitions:
     properties:
       TagName:
         type: string
-        enum: [Tag A, Tag B, Tag C, Tag D, Tag E]
+        enum: [Tag A, Tag B  , Tag C, Tag D, Tag E]
       TagId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
   WebClientItemDto:
     type: object
     required:
@@ -1127,15 +1129,23 @@ definitions:
       ChildId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       ParentId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       SortOrder:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       SegmentId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       Created:
         format: date-time
         type: string
@@ -1155,9 +1165,13 @@ definitions:
       ItemId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       SpecificationValueId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       Created:
         format: date-time
         type: string
@@ -1178,9 +1192,13 @@ definitions:
       ItemId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       CustomPropertyId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       Value:
         type: string
       Created:
@@ -1204,13 +1222,19 @@ definitions:
       ItemSettingId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       ItemId:
         format: int32
         type: integer
+        maximum: 1000
+        minimum: 1
       Name:
         type: string
+        enum: [Setting Name A, Setting Name B, Setting Name C, Setting Name D, Setting Name E]
       Value:
         type: string
+        enum: [Setting Value A, Setting Value B, Setting Value C, Setting Value D, Setting Value E]
       Created:
         format: date-time
         type: string
@@ -1243,9 +1267,10 @@ definitions:
         type: array
         items:
           type: string
+          enum: [Tag A, Tag B, Tag C, Tag D, Tag E]
       SearchText:
         type: string
-        enum: [Dentalcompare, CompareNetworks, 3M, ESPE Indirect, Procedures]
+        enum: [Search Text A, Search Text B, Search Text C, Search Text D, Search Text E]
       StartIndex:
         format: int32
         type: integer
@@ -1276,6 +1301,7 @@ definitions:
         type: array
         items:
           type: string
+          enum: [Tag A, Tag B, Tag C, Tag D, Tag E]
       ShowFolder:
         type: boolean
         enum: [true, false]
