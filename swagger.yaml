@@ -662,7 +662,7 @@ definitions:
         enum: [jevhl92wnastdx12zben, buixpiwb2xaxdwd39phc, u55wtf84x8qzl7fpzkv1, dpe2atsrv8wdkbe0co5i, lmqh922ehmltnpgi5a0l]
       redirectUri:
         type: string
-        enum: [http://www.redirecturi.com/a, http://www.redirecturi.com/b, http://www.redirecturi.com/c, http://www.redirecturi.com/d, http://www.redirecturi.com/e]
+        enum: [https://imsmart-staging-webclient.comparenetworks.com]
   Object:
     type: object
     properties: {}
@@ -860,6 +860,18 @@ definitions:
     type: object
     required:
       - MainFile
+      - AlternateFile
+      - LargeImage
+      - BannerImage
+      - SmallImage
+      - IconImage
+      - SquareLargeImage
+      - OneThirdImage
+      - TwoThirdImage
+      - FeaturedLargeImage
+      - SkinnyImage
+      - FatImage
+      - FullScreenImage
     properties:
       MainFile:
         type: string
