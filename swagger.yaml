@@ -1051,6 +1051,7 @@ definitions:
     properties:
       TagGroupName:
         type: string
+        enum: [Tag Group A, Tag Group B, Tag Group C, Tag Group D, Tag Group E]
       Tags:
         type: array
         items:
@@ -1063,6 +1064,7 @@ definitions:
     properties:
       TagName:
         type: string
+        enum: [Tag A, Tag B, Tag C, Tag D, Tag E]
       TagId:
         format: int32
         type: integer
