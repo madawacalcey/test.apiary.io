@@ -658,10 +658,13 @@ definitions:
     properties:
       code:
         type: string
+        enum: [sortr5d8dz5xgx0deg17, zpn6ti1sxeoo9nc0kd1x, h5dsvkl4ekr76vxwd7a7, 3d4bu76plmh0cxek9jms, jbli43tel7murr9djoua]
       clientId:
         type: string
+        enum: [jevhl92wnastdx12zben, buixpiwb2xaxdwd39phc, u55wtf84x8qzl7fpzkv1, dpe2atsrv8wdkbe0co5i, lmqh922ehmltnpgi5a0l]
       redirectUri:
         type: string
+        enum: [http://www.redirecturi.com/a, http://www.redirecturi.com/b, http://www.redirecturi.com/c, http://www.redirecturi.com/d, http://www.redirecturi.com/e]
   Object:
     type: object
     properties: {}
