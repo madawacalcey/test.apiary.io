@@ -960,7 +960,7 @@ definitions:
     properties:
       name:
         type: string
-        enum: [3m-core]
+        enum: [Organization A, Organization B, Organization C, Organization D, Organization E]
   ItemCrocodocSessionDto:
     type: object
     required:
