@@ -334,7 +334,7 @@ paths:
       deprecated: false
   '/api/{version}/Items/Search':
     post:
-      summary: Perform Search [PENDING MODIFICATIONS BY DEVS]
+      summary: Search
       description: Performs a search based on the provided search criteria on the items associated to the authenticated user.
       security:
         - Bearer: []
@@ -400,9 +400,9 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ItemFiltersDto'
+            $ref: '#/definitions/ItemFiltersLibraryDto'
         - name: version
-          description: The API version
+          description: The API version to be used to get the data.
           in: path
           required: true
           type: string
@@ -1195,7 +1195,6 @@ definitions:
       - SegmentIds
       - FileTypes
       - Tags
-      - ShowFolder
       - SearchText
       - StartIndex
       - PageSize
@@ -1214,12 +1213,42 @@ definitions:
         type: array
         items:
           type: string
-      ShowFolder:
-        type: boolean
-        enum: [true, false]
       SearchText:
         type: string
         enum: [Dentalcompare, CompareNetworks, 3M, ESPE Indirect, Procedures]
+      StartIndex:
+        format: int32
+        type: integer
+        maximum: 1000
+        minimum: 1
+      PageSize:
+        format: int32
+        type: integer
+        maximum: 100
+        minimum: 1
+    minItems: 1
+    uniqueItems: true
+  ItemFiltersLibraryDto:
+    type: object
+    required:
+      - FileTypes
+      - Tags
+      - ShowFolder
+      - StartIndex
+      - PageSize
+    properties:
+      FileTypes:
+        type: array
+        items:
+          type: string
+          enum: [mp4, mpv, 3gp, mov, m4v, flv, mp3, m4a, m4r, au, wav, bmp, gif, tif, png, jpg, jpeg, xlsx, xlsm, xlsb, xls, xlm pps, pptx, ppt,csv, pdf, txt, key, epub, ibooks]
+      Tags:
+        type: array
+        items:
+          type: string
+      ShowFolder:
+        type: boolean
+        enum: [true, false]
       StartIndex:
         format: int32
         type: integer
