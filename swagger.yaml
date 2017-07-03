@@ -14,18 +14,6 @@ basePath: /webclientapi
 schemes:
   - https
 securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
-    
   Bearer:
     type: apiKey
     name: Authorization
@@ -137,6 +125,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: List of child items for the specified parent item id.
@@ -172,6 +164,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Image links of the item specified by the item id.
@@ -205,6 +201,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: True if the user is allowed to access the given item, otherwise False
@@ -238,6 +238,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Created crocodoc session details of the item, specified by the item Id.
@@ -274,6 +278,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Download URL of the item specified by the item id.
@@ -314,6 +322,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The item filter categories for the segment(s) specified by the segment id(s).
@@ -352,6 +364,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Collection of items associated to the authenticated user that matched to the search criteria
@@ -390,6 +406,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Collection of items matched to the user filter criteria
@@ -423,6 +443,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: List of segments associated to the user
@@ -450,6 +474,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Item user data collection for the authenticated user.
@@ -477,6 +505,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The organization details of the authenticated user.
@@ -519,6 +551,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The organization settings of the authenticated user.
@@ -564,6 +600,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The authenticated user's organization and user settings.
@@ -593,6 +633,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The segments associated to the authenticated user.
