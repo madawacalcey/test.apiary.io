@@ -972,7 +972,7 @@ definitions:
     properties:
       Uuid:
         type: string
-        enum: [f854eb5f-995c-40f6-9e95-34fbdfa60476, e2665e9c-5abb-4a7e-a7a6-2d17924c49d9, da5aa101-c6c3-417f-8995-89c1856486f7, d35351cc-7a15-4248-b592-18b6df78ab62, 02199a18-69cb-44c0-a6c4-a0abda7ae470]
+        enum: [8r3p9bi8un1ro9wrvfvb, scwvmwsin26rqbahp087, w0336ypfwqa6lya7lert, 8lq7ml65z75c7br90wgl, 1539uqq5je3inqxajpc9]
       Session:
         type: string
       Status:
@@ -992,10 +992,10 @@ definitions:
     properties:
       AssetLink:
         type: string
-        enum: ['macs-demo-dev.macs.local/Files?id=24811&ts=1498735504&sig=/f0H1uU/er+hM39PbA7uzBtoyrU=', 'macs-demo-dev.macs.local/Files?id=24813&ts=1498735479&sig=70N54DwLkMqg5WvmuxE6N4Lmcvk=', 'macs-demo-dev.macs.local/Files?id=24809&ts=1498735359&sig=cGGl9hMnz60kGmQHxnd+ZIIM5LA=', 'macs-demo-dev.macs.local/Files?id=24814&ts=1498735393&sig=ekG6WXPh8+Di4OWZuEvKC+h5z3A=']
+        enum: [http://www.mockdata.com/a, http://www.mockdata.com/b, http://www.mockdata.com/c, http://www.mockdata.com/d, http://www.mockdata.com/e]
       AssetTitle:
         type: string
-        enum: [BC imSMART Why CompareNetworks, BC imSMART How Does it Work, Text Response Solution, Ophthalmologyweb User Demographics, Ophthalmologyweb Home Page Screenshot, Demographics, Featured Products Screenshot, CNPG Demo Reel, CompareNetworks Company Video, Biocompare User Demographics, Dentalcompare Digital Media Solutions 2014, Starbucks Card]
+        enum: [Mock Item A, Mock Item B, Mock Item C, Mock Item D, Mock Item E]
       ExpiryDate:
         format: date-time
         type: string
