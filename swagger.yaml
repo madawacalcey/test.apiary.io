@@ -992,6 +992,8 @@ definitions:
       Viewable:
         type: boolean
         enum: [true, false]
+      Error:
+        type: string
   ItemDownloadLinkDto:
     type: object
     required:
