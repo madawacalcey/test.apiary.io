@@ -646,8 +646,6 @@ paths:
               $ref: '#/definitions/ItemDto'
       deprecated: false
       
-      
-      
 definitions:
   OAuthCode:
     type: object
@@ -865,30 +863,43 @@ definitions:
     properties:
       MainFile:
         type: string
+        enum: [https://www.item.com/mainfile/a, https://www.item.com/mainfile/b, https://www.item.com/mainfile/c, https://www.item.com/mainfile/d, https://www.item.com/mainfile/e]
       AlternateFile:
         type: string
+        enum: [https://www.item.com/alternatefile/a, https://www.item.com/alternatefile/b, https://www.item.com/alternatefile/c, https://www.item.com/alternatefile/d, https://www.item.com/alternatefile/e]
       LargeImage:
         type: string
+        enum: [https://www.item.com/largeimage/a, https://www.item.com/largeimage/b, https://www.item.com/largeimage/c, https://www.item.com/largeimage/d, https://www.item.com/largeimage/e]
       BannerImage:
         type: string
+        enum: [https://www.item.com/bannerimage/a, https://www.item.com/bannerimage/b, https://www.item.com/bannerimage/c, https://www.item.com/bannerimage/d, https://www.item.com/bannerimage/e]
       SmallImage:
         type: string
+        enum: [https://www.item.com/smallimage/a, https://www.item.com/smallimage/b, https://www.item.com/smallimage/c, https://www.item.com/smallimage/d, https://www.item.com/smallimage/e]
       IconImage:
         type: string
+        enum: [https://www.item.com/iconimage/a, https://www.item.com/iconimage/b, https://www.item.com/iconimage/c, https://www.item.com/iconimage/d, https://www.item.com/iconimage/e]
       SquareLargeImage:
         type: string
+        enum: [https://www.item.com/squarelargeimage/a, https://www.item.com/squarelargeimage/b, https://www.item.com/squarelargeimage/c, https://www.item.com/squarelargeimage/d, https://www.item.com/squarelargeimage/e]
       OneThirdImage:
         type: string
+        enum: [https://www.item.com/onethirdimage/a, https://www.item.com/onethirdimage/b, https://www.item.com/onethirdimage/c, https://www.item.com/onethirdimage/d, https://www.item.com/onethirdimage/e]
       TwoThirdImage:
         type: string
+        enum: [https://www.item.com/twothirdimage/a, https://www.item.com/twothirdimage/b, https://www.item.com/twothirdimage/c, https://www.item.com/twothirdimage/d, https://www.item.com/twothirdimage/e]
       FeaturedLargeImage:
         type: string
+        enum: [https://www.item.com/featuredlargeimage/a, https://www.item.com/featuredlargeimage/b, https://www.item.com/featuredlargeimage/c, https://www.item.com/featuredlargeimage/d, https://www.item.com/featuredlargeimage/e]
       SkinnyImage:
         type: string
+        enum: [https://www.item.com/skinnyimage/a, https://www.item.com/skinnyimage/b, https://www.item.com/skinnyimage/c, https://www.item.com/skinnyimage/d, https://www.item.com/skinnyimage/e]
       FatImage:
         type: string
+        enum: [https://www.item.com/fatimage/a, https://www.item.com/fatimage/b, https://www.item.com/fatimage/c, https://www.item.com/fatimage/d, https://www.item.com/fatimage/e]
       FullScreenImage:
         type: string
+        enum: [https://www.item.com/fullscreenimage/a, https://www.item.com/fullscreenimage/b, https://www.item.com/fullscreenimage/c, https://www.item.com/fullscreenimage/d, https://www.item.com/fullscreenimage/e]
   AccessibilityStatus:
     type: object
     required:
