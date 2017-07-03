@@ -721,12 +721,12 @@ definitions:
         maximum: 100
       Title:
         type: string
-        enum: [BC imSMART Why CompareNetworks, BC imSMART How Does it Work, Text Response Solution, Ophthalmologyweb User Demographics, Ophthalmologyweb Home Page Screenshot, Demographics, Featured Products Screenshot, CNPG Demo Reel, CompareNetworks Company Video, Biocompare User Demographics, Dentalcompare Digital Media Solutions 2014, Starbucks Card]
+        enum: [Mock Item A, Mock Item B, Mock Item C, Mock Item D, Mock Item E]
       FeaturedTitle:
         type: string
       ItemUniqueIdentifier:
         type: string
-        enum: [F39318C3-E3DA-4A04-AEFF-5F4EDDA6099C, 112D41B0-0697-456D-8409-9E87718947FE, AA90CC1E-2D03-449B-B1A6-AEE2556A279E, 8BB793B8-54A4-4EDE-B610-C22B897ED25D]
+        enum: [un57rhyb2b1xcvvvcdx7, gs1v9nzkpl25vjbtdlzr, pv3i037w1ttuumvg4xow, vezg7qmf5ddr1almquiv, 253aynp1vokai6fsmv0b]
       Size:
         format: int32
         type: integer
@@ -757,7 +757,7 @@ definitions:
         enum: [true, false]
       Description:
         type: string
-        enum: [Description-1, Description-2, Description-3, Description-4, Description-5]
+        enum: [Mock Item A Description, Mock Item B Description, Mock Item C Description, Mock Item D Description, Mock Item E Description]
       ItemType:
         format: int32
         type: integer
@@ -782,19 +782,25 @@ definitions:
         type: string
       Keyword:
         type: string
-        enum: [Keyword-1, Keyword-2, Keyword-3, Keyword-4, Keyword-5, Keyword-6]
+        enum: [Mock Item A Keyword, Mock Item B Keyword, Mock Item C Keyword, Mock Item D Keyword, Mock Item E Keyword]
       AssetUrl:
         type: string
+        enum: [http://www.mockdata.com/a, http://www.mockdata.com/b, http://www.mockdata.com/c, http://www.mockdata.com/d, http://www.mockdata.com/e]
       AlternateShareUrl:
         type: string
+        enum: [http://www.sharedata.com/a, http://www.sharedata.com/b, http://www.sharedata.com/c, http://www.sharedata.com/d, http://www.sharedata.com/e]
       Checksum:
         type: string
+        enum: [vv9e8jo9henpi2owu8l8, k1qc11huyhu5ocp31a2q, zv5lpsph6yn99w7qide7, 0t1byx20cv38dvm8u2eg, a5j4gr6b5pppk58feqrx]
       LargeImageChecksum:
         type: string
+        enum: [wo99rr6v92t2o1k2yp6n, kuhdl9bw5sgc78cgoe6l, 9xpz7yfudg6duwe57rc2, i6anceseb7ir9q6hnuvd, p28en0aopozd9jvrubql]
       SmallImageChecksum:
         type: string
+        enum: [rkf12i6vudle4jgx0x91, wqb2zs50tliavz71umh4, 2lmllifi8moy48ipu0x1, ez7wmkllboawzd69s8c4, jcthp0e1ke23t0loefn5]
       IconImageChecksum:
         type: string
+        enum: [irc3pah6l76t549luoip, wll5qy7vw28x9heriu5k, f4tv83khr6nrd80fuu21, 6pcounor02xmitgfranc, 3ew8a606p0z5r77tsl2w]
       RootLevelFolder:
         type: boolean
         enum: [true, false]
@@ -815,23 +821,31 @@ definitions:
         type: string
       BannerImageChecksum:
         type: string
+        enum: [esz0dhgbaf4hqyqb1bcd, 8awloag2yvrf4fq8zmmq, biya1au39qq0tqjkwb5m, a52f58tarongcuewwbb5, 5t54oky9uyonpqd9tb8b]
       HasBannerImage:
         type: boolean
         enum: [true, false]
       CrocodocUuid:
         type: string
+        enum: [mgirpgcfe85eefmgf1nq, x6j6yrbg6bmuf438biqt, ydybw4i3zp83djbq9mat, dz9mho0jlrvtdq2ptuhv, th4vzxcz25i1no9vw8pt]
       IconImageName:
         type: string
+        enum: [un57rhyb2b1xcvvvcdx7_icon, gs1v9nzkpl25vjbtdlzr_icon, pv3i037w1ttuumvg4xow_icon, vezg7qmf5ddr1almquiv_icon, 253aynp1vokai6fsmv0b_icon]
       SmallImageName:
         type: string
+        enum: [un57rhyb2b1xcvvvcdx7_small, gs1v9nzkpl25vjbtdlzr_small, pv3i037w1ttuumvg4xow_small, vezg7qmf5ddr1almquiv_small, 253aynp1vokai6fsmv0b_small]
       LargeImageName:
         type: string
+        enum: [un57rhyb2b1xcvvvcdx7_large, gs1v9nzkpl25vjbtdlzr_large, pv3i037w1ttuumvg4xow_large, vezg7qmf5ddr1almquiv_large, 253aynp1vokai6fsmv0b_large]
       BannerImageName:
         type: string
+        enum: [un57rhyb2b1xcvvvcdx7_banner, gs1v9nzkpl25vjbtdlzr_banner, pv3i037w1ttuumvg4xow_banner, vezg7qmf5ddr1almquiv_banner, 253aynp1vokai6fsmv0b_banner]
       FileStorageName:
         type: string
+        enum: [un57rhyb2b1xcvvvcdx7, gs1v9nzkpl25vjbtdlzr, pv3i037w1ttuumvg4xow, vezg7qmf5ddr1almquiv, 253aynp1vokai6fsmv0b]
       AlternateFileStorageName:
         type: string
+        enum: [un57rhyb2b1xcvvvcdx7_alternate, gs1v9nzkpl25vjbtdlzr_alternate, pv3i037w1ttuumvg4xow_alternate, vezg7qmf5ddr1almquiv_alternate, 253aynp1vokai6fsmv0b_alternate]
       HasAlternateFile:
         type: boolean
         enum: [true, false]
