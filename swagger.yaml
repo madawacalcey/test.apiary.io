@@ -1063,6 +1063,7 @@ definitions:
       - Session
       - Status
       - Viewable
+      - Error
     properties:
       Uuid:
         type: string
@@ -1084,6 +1085,8 @@ definitions:
       - AssetTitle
       - AllowToEmail
       - Shareable
+      - AssetLink
+      - ExpiryDate
     properties:
       AssetLink:
         type: string
@@ -1381,6 +1384,8 @@ definitions:
   ItemFiltersLibraryDto:
     type: object
     required:
+      - FileTypes
+      - Tags
       - ShowFolder
       - StartIndex
       - PageSize
