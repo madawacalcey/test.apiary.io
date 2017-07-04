@@ -263,6 +263,10 @@ paths:
           description: Returned if the item has no cotent, or if the crocodoc encountered an error when processing the file.
           schema:
             $ref: '#/definitions/ErrorDto'
+        '404':
+          description: Returned if the item is not found.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
   '/api/{version}/Items/{itemId}/GetAssetEmailLink':
     get:
@@ -304,6 +308,10 @@ paths:
           description: Download URL of the item specified by the item id.
           schema:
             $ref: '#/definitions/ItemDownloadLinkDto'
+        '404':
+          description: Returned if the item is not found.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
   '/api/{version}/Items/FilterCategories':
     post:
@@ -401,7 +409,7 @@ paths:
       deprecated: false
   '/api/{version}/Items/Library':
     post:
-      summary: Gets the items matching the filter criteria
+      summary: Library
       description: |
         Gets items matching the filter criteria, from the items associated to the current user
         
@@ -693,6 +701,8 @@ definitions:
         type: array
         items:
           type: integer
+          maximum: 1000
+          minimum: 1
   OAuthCode:
     type: object
     required:
@@ -791,6 +801,7 @@ definitions:
         enum: [Mock Item A, Mock Item B, Mock Item C, Mock Item D, Mock Item E]
       FeaturedTitle:
         type: string
+        enum: [Mock Item A Featured Title, Mock Item B Featured Title, Mock Item C Featured Title, Mock Item D Featured Title, Mock Item E Featured Title]
       ItemUniqueIdentifier:
         type: string
         enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973, 50410c14-c6b2-46e5-b24b-c801eee4fe69, 44a2cd69-25bb-41b5-9148-af88c4cc4e64, 40ce5475-89c1-4a74-bdf0-5862320ea144, fb65cb34-4131-417b-9621-89ccab884ee5]
@@ -847,6 +858,7 @@ definitions:
         enum: [true, false]
       PartNo:
         type: string
+        enum: [Item Part Number]
       Keyword:
         type: string
         enum: [Mock Item A Keyword, Mock Item B Keyword, Mock Item C Keyword, Mock Item D Keyword, Mock Item E Keyword]
@@ -1057,13 +1069,12 @@ definitions:
         enum: [5ARHVtko5ouhylU_2Z_Uv0aMw5JvhYckfRH2gHPNQX_c4uL4F3MBZ9PgeQRmW13tUMc-w1Z-bRv5nQuMl28kAZYJEnfdQmpQKs4-3xNMn9F0jND0YWh_C2xqRczt]
       Status:
         type: string
-        enum: [DONE, ERROR]
+        enum: [DONE]
       Viewable:
         type: boolean
         enum: [true]
       Error:
         type: string
-        enum: [Error Occured]
   ItemDownloadLinkDto:
     type: object
     required:
@@ -1327,10 +1338,6 @@ definitions:
   ItemFiltersDto:
     type: object
     required:
-      - SegmentIds
-      - FileTypes
-      - Tags
-      - SearchText
       - StartIndex
       - PageSize
     properties:
@@ -1367,8 +1374,6 @@ definitions:
   ItemFiltersLibraryDto:
     type: object
     required:
-      - FileTypes
-      - Tags
       - ShowFolder
       - StartIndex
       - PageSize
