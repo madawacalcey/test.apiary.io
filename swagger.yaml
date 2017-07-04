@@ -222,7 +222,7 @@ paths:
         Gets a created Crocodoc session for the item with the provided item id.
         A session will only be created if the status is either PROCESSING or DONE. 
         A crocodoc document status may change to ERROR from PROCESSING in the event that processing fails.
-        https://crocodoc.com/docs/api/#doc-status
+        (https://crocodoc.com/docs/api/#doc-status)
         
         The UUID denotes the unique crocodoc id.
         The Error is populated only when the Status is ERROR.
