@@ -220,6 +220,9 @@ paths:
       summary: Get Crocodoc Session
       description: |
         Gets a created Crocodoc session for the item with the provided item id.
+        A session will only be created if the status is either PROCESSING or DONE. 
+        A crocodoc document status may change to ERROR from PROCESSING in the event that processing fails.
+        https://crocodoc.com/docs/api/#doc-status
         
         The UUID denotes the unique crocodoc id.
         The Error is populated only when the Status is ERROR.
@@ -531,7 +534,7 @@ paths:
   '/api/{version}/Organization':
     get:
       summary: Get Organization
-      description: Gets the organization details of the authenticated user.
+      description: Gets the organization details.
       tags:
         - Organization
       operationId: GetOrganizationDetails
@@ -556,7 +559,7 @@ paths:
   '/api/{version}/OrganizationSettings':
     post:
       summary: Get Organization Settings
-      description: Gets organization settings of the authenticated user.
+      description: Gets organization settings.
       tags:
         - OrganizationSettings
       operationId: GetOrganizationSettings
