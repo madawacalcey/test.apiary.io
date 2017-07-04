@@ -793,7 +793,7 @@ definitions:
         type: string
       ItemUniqueIdentifier:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7, gs1v9nzkpl25vjbtdlzr, pv3i037w1ttuumvg4xow, vezg7qmf5ddr1almquiv, 253aynp1vokai6fsmv0b]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973, 50410c14-c6b2-46e5-b24b-c801eee4fe69, 44a2cd69-25bb-41b5-9148-af88c4cc4e64, 40ce5475-89c1-4a74-bdf0-5862320ea144, fb65cb34-4131-417b-9621-89ccab884ee5]
       Size:
         format: int32
         type: integer
@@ -870,19 +870,19 @@ definitions:
         enum: [irc3pah6l76t549luoip, wll5qy7vw28x9heriu5k, f4tv83khr6nrd80fuu21, 6pcounor02xmitgfranc, 3ew8a606p0z5r77tsl2w]
       RootLevelFolder:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       HasLink:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       ImageModified:
         format: date-time
         type: string
       ShowBlackBar:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       ShowDescription:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       KeyBenefit:
         format: date-time
         type: string
@@ -891,37 +891,37 @@ definitions:
         enum: [esz0dhgbaf4hqyqb1bcd, 8awloag2yvrf4fq8zmmq, biya1au39qq0tqjkwb5m, a52f58tarongcuewwbb5, 5t54oky9uyonpqd9tb8b]
       HasBannerImage:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       CrocodocUuid:
         type: string
-        enum: [mgirpgcfe85eefmgf1nq, x6j6yrbg6bmuf438biqt, ydybw4i3zp83djbq9mat, dz9mho0jlrvtdq2ptuhv, th4vzxcz25i1no9vw8pt]
+        enum: [a25f5f4d-0ecd-4b3c-b62b-5ce9a1622b55, 39a6780a-40e9-480e-95c1-871eef264b0b, b2cf4d64-1c26-4054-b184-7c63c25645dc, dd196595-7d85-4b00-b2db-7d3f1f381562, b83e5746-d25e-407f-a8cd-b80ba6f0b729]
       IconImageName:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7_icon, gs1v9nzkpl25vjbtdlzr_icon, pv3i037w1ttuumvg4xow_icon, vezg7qmf5ddr1almquiv_icon, 253aynp1vokai6fsmv0b_icon]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973_icon, 50410c14-c6b2-46e5-b24b-c801eee4fe69_icon, 44a2cd69-25bb-41b5-9148-af88c4cc4e64_icon, 40ce5475-89c1-4a74-bdf0-5862320ea144_icon, fb65cb34-4131-417b-9621-89ccab884ee5_icon]
       SmallImageName:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7_small, gs1v9nzkpl25vjbtdlzr_small, pv3i037w1ttuumvg4xow_small, vezg7qmf5ddr1almquiv_small, 253aynp1vokai6fsmv0b_small]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973_small, 50410c14-c6b2-46e5-b24b-c801eee4fe69_small, 44a2cd69-25bb-41b5-9148-af88c4cc4e64_small, 40ce5475-89c1-4a74-bdf0-5862320ea144_small, fb65cb34-4131-417b-9621-89ccab884ee5_small]
       LargeImageName:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7_large, gs1v9nzkpl25vjbtdlzr_large, pv3i037w1ttuumvg4xow_large, vezg7qmf5ddr1almquiv_large, 253aynp1vokai6fsmv0b_large]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973_large, 50410c14-c6b2-46e5-b24b-c801eee4fe69_large, 44a2cd69-25bb-41b5-9148-af88c4cc4e64_large, 40ce5475-89c1-4a74-bdf0-5862320ea144_large, fb65cb34-4131-417b-9621-89ccab884ee5_large]
       BannerImageName:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7_banner, gs1v9nzkpl25vjbtdlzr_banner, pv3i037w1ttuumvg4xow_banner, vezg7qmf5ddr1almquiv_banner, 253aynp1vokai6fsmv0b_banner]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973_banner, 50410c14-c6b2-46e5-b24b-c801eee4fe69_banner, 44a2cd69-25bb-41b5-9148-af88c4cc4e64_banner, 40ce5475-89c1-4a74-bdf0-5862320ea144_banner, fb65cb34-4131-417b-9621-89ccab884ee5_banner]
       FileStorageName:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7, gs1v9nzkpl25vjbtdlzr, pv3i037w1ttuumvg4xow, vezg7qmf5ddr1almquiv, 253aynp1vokai6fsmv0b]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973, 50410c14-c6b2-46e5-b24b-c801eee4fe69, 44a2cd69-25bb-41b5-9148-af88c4cc4e64, 40ce5475-89c1-4a74-bdf0-5862320ea144, fb65cb34-4131-417b-9621-89ccab884ee5]
       AlternateFileStorageName:
         type: string
-        enum: [un57rhyb2b1xcvvvcdx7_alternate, gs1v9nzkpl25vjbtdlzr_alternate, pv3i037w1ttuumvg4xow_alternate, vezg7qmf5ddr1almquiv_alternate, 253aynp1vokai6fsmv0b_alternate]
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973_alternate, 50410c14-c6b2-46e5-b24b-c801eee4fe69_alternate, 44a2cd69-25bb-41b5-9148-af88c4cc4e64_alternate, 40ce5475-89c1-4a74-bdf0-5862320ea144_alternate, fb65cb34-4131-417b-9621-89ccab884ee5_alternate]
       HasAlternateFile:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       IsExternal:
         type: boolean
-        enum: [true, false]
+        enum: [true]
       HTML5Enabled:
         type: boolean
-        enum: [true, false]
+        enum: [true]
   ItemLinkDto:
     type: object
     required:
@@ -985,9 +985,11 @@ definitions:
     properties:
       IsAccessible:
         type: boolean
-        enum: [true, false]
+        enum: [true]
   ItemCollection:
     type: object
+    required:
+      - items
     properties:
       items:
         type: array
