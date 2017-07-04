@@ -706,6 +706,7 @@ definitions:
           type: integer
           maximum: 1000
           minimum: 1
+          uniqueItems: true
   OAuthCode:
     type: object
     required:
@@ -1364,8 +1365,11 @@ definitions:
       Tags:
         type: array
         items:
-          type: integer
-          enum: [1, 2, 3, 4, 5]
+          type: array
+          items:
+            type: integer
+            enum: [1, 2, 3, 4, 5]
+            uniqueItems: true
       SearchText:
         type: string
         enum: [Search Text]
@@ -1398,8 +1402,11 @@ definitions:
       Tags:
         type: array
         items:
-          type: integer
-          enum: [1, 2, 3, 4, 5]
+          type: array
+          items:
+            type: integer
+            enum: [1, 2, 3, 4, 5]
+            uniqueItems: true
       ShowFolder:
         type: boolean
         enum: [true, false]
