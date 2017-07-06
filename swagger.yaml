@@ -10,7 +10,7 @@ info:
     
     All responses are tailored towards the authentication user.
   contact:
-    email: imsmart@calcey.com
+    email: imsmart@comparenetworks.com
 host: imsmart-staging.comparenetworks.com
 basePath: /webclientapi
 schemes:
@@ -1365,11 +1365,9 @@ definitions:
       Tags:
         type: array
         items:
-          type: array
-          items:
-            type: integer
-            enum: [1, 2, 3, 4, 5]
-            uniqueItems: true
+          type: integer
+          enum: [1, 2, 3, 4, 5]
+          uniqueItems: true
       SearchText:
         type: string
         enum: [Search Text]
@@ -1402,11 +1400,9 @@ definitions:
       Tags:
         type: array
         items:
-          type: array
-          items:
-            type: integer
-            enum: [1, 2, 3, 4, 5]
-            uniqueItems: true
+          type: integer
+          enum: [1, 2, 3, 4, 5]
+          uniqueItems: true
       ShowFolder:
         type: boolean
         enum: [true, false]
