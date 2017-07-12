@@ -1100,6 +1100,83 @@ paths:
             items:
               $ref: '#/definitions/QuickGroupDto'
       deprecated: false
+  '/api/{version}/Groups/Shared':
+    post:
+      summary: Create Shared Group
+      description: Creates a shared group.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: CreateSharedGroup
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: data
+          description: The shared group data.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SharedGroupDataDto'
+      responses:
+        '200':
+          description: The created shared group.
+          schema:
+            $ref: '#/definitions/SharedGroupDto'
+      deprecated: false
+    put:
+      summary: Remove Shared Group
+      description: Removes a shared group.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: RemoveSharedGroup
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: data
+          description: The shared group data.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SharedGroupDataDto'
+      responses:
+        '200':
+          description: Successfully deleted message.
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      deprecated: false
       
       
 definitions:
@@ -1848,4 +1925,8 @@ definitions:
   FavouriteGroupDto:
     type: object
   QuickGroupDto:
+    type: object
+  SharedGroupDto:
+    type: object
+  SharedGroupDataDto:
     type: object
