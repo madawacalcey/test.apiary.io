@@ -1270,7 +1270,6 @@ paths:
             $ref: '#/definitions/SharedGroupDto'
       deprecated: false
       
-      
 definitions:
   OrganizationSettingsRequestDto:
     type: object
