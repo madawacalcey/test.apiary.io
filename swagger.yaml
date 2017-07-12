@@ -684,6 +684,394 @@ paths:
             items:
               $ref: '#/definitions/ItemDto'
       deprecated: false
+  '/api/{version}/Groups':
+    post:
+      summary: Create My Group
+      description: Creates a new group of type My Group.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: CreateGroup
+      consumes: 
+          - application/json
+          - text/json
+          - application/xml
+          - text/xml
+          - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: groupdata
+          description: The information of the group to be created.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CreateGroupDto'
+      responses:
+        '201':
+          description: The details of the created group.
+          schema:
+            $ref: '#/definitions/GroupDto'
+      deprecated: false
+  '/api/{version}/Groups/{typeList}':
+    get:
+      summary: Get Groups
+      description: Gets the groups with the provided types. Favourites and Quick Groups are not returned.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: GetGroupsByType
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: typeList
+          description: A comma separated list of group type ids.
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The details of the retrieved groups.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupDto'
+      deprecated: false
+  '/api/{version}/Groups/{id}':
+    get:
+      summary: Get Group
+      description: Gets the group with the provided id.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: GetGroup
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+      responses:
+        '200':
+          description: The details of the retrieved group.
+          schema:
+            $ref: '#/definitions/GroupDto'
+      deprecated: false
+    put:
+      summary: Edit Group
+      description: Edits the group with the provided id and data.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: EditGroup
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        - name: groupdata
+          description: The information of the group to be updated.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/EditGroupDto'
+      responses:
+        '200':
+          description: Successfully updated group.
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      deprecated: false
+    delete:
+      summary: Delete Group
+      description: Deletes the group with the provided id.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: DeleteGroup
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+      responses:
+        '200':
+          description: Successfully Deleted Group.
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      deprecated: false
+  '/api/{version}/Groups/{id}/Items':
+    get:
+      summary: Get Group Items
+      description: Gets the items for the group with the provided id.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: GetGroupItems
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+      responses:
+        '200':
+          description: The items for the group with the provided id.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GroupItemDto'
+      deprecated: false
+    post:
+      summary: Add Group Items
+      description: Adds the assets with the provided ids to the group with the provided id.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: AddGroupItems
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        - name: data
+          description: The item ids.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupItemDataDto'
+      responses:
+        '201':
+          description: The created group item.
+          schema:
+            $ref: '#/definitions/GroupItemDto'
+      deprecated: false
+    delete:
+      summary: Delete Group Items
+      description: Deletes the assets with the provided ids to the group with the provided id.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: DeleteGroupItems
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        - name: data
+          description: The item ids.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupItemDataDto'
+      responses:
+        '200':
+          description: Successfully Deleted Message.
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      deprecated: false
+  '/api/{version}/Groups/{id}/Items/UpdateOrder':
+    post:
+      summary: Update Group Items Order
+      description: Updates the order of the assets with the provided ids to the group with the provided id.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: AddGroupItems
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        - name: data
+          description: The item ids.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupItemDataDto'
+      responses:
+        '200':
+          description: The updated group item.
+          schema:
+            $ref: '#/definitions/GroupItemDto'
+      deprecated: false
+  '/api/{version}/Groups/Favorites':
+    get:
+      summary: Get Favourite Group
+      description: Gets the user's favourite group.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: GetFavouriteGroup
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The user's favourite group.
+          schema:
+            $ref: '#/definitions/FavouriteGroupDto'
+      deprecated: false
+      
       
 definitions:
   OrganizationSettingsRequestDto:
@@ -1418,3 +1806,15 @@ definitions:
         minimum: 1
     minItems: 1
     uniqueItems: true
+  GroupDto:
+    type: object
+  CreateGroupDto:
+    type: object
+  EditGroupDto:
+    type: object
+  GroupItemDto:
+    type: object
+  GroupItemDataDto:
+    type: object
+  FavouriteGroupDto:
+    type: object
