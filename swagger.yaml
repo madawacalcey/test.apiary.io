@@ -1212,7 +1212,7 @@ paths:
           maximum: 1000
           minimum: 1
         - name: data
-          description: The shared group data.
+          description: The consumed my shared group.
           in: body
           required: true
           schema:
@@ -1226,7 +1226,7 @@ paths:
   '/api/{version}/Groups/Shared/{id}/Convert':
     post:
       summary: Convert My Shared Group
-      description: Converts a my shared group to a shared group.
+      description: Converts a my shared group to a my group.
       security:
         - Bearer: []
       tags:
