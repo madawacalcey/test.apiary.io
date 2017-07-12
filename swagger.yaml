@@ -28,7 +28,7 @@ securityDefinitions:
       "Authorization: Bearer xxxxxx.yyyyyyy.zzzzzz"
       
 paths:
-  /auth/imsmart:
+  '/auth/imsmart':
     post:
       summary: Authenticate User
       description: Authenticates the user and returns an access code to access the API.
@@ -1071,6 +1071,35 @@ paths:
           schema:
             $ref: '#/definitions/FavouriteGroupDto'
       deprecated: false
+  '/api/{version}/Groups/QuickGroup':
+    get:
+      summary: Get Quick Groups
+      description: Gets the user's favourite groups.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: GetQuickGroup
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The user's quick groups.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/QuickGroupDto'
+      deprecated: false
       
       
 definitions:
@@ -1817,4 +1846,6 @@ definitions:
   GroupItemDataDto:
     type: object
   FavouriteGroupDto:
+    type: object
+  QuickGroupDto:
     type: object
