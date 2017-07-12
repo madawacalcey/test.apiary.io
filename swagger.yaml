@@ -1177,6 +1177,98 @@ paths:
             additionalProperties:
               type: string
       deprecated: false
+  '/api/{version}/Groups/Shared/{id}/Consume':
+    post:
+      summary: Consume Shared Group
+      description: Consumes a shared group as a my shared group.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: ConsumeSharedGroup
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        - name: data
+          description: The shared group data.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SharedGroupDataDto'
+      responses:
+        '200':
+          description: The consumed shared my group.
+          schema:
+            $ref: '#/definitions/SharedGroupDto'
+      deprecated: false
+  '/api/{version}/Groups/Shared/{id}/Convert':
+    post:
+      summary: Convert My Shared Group
+      description: Converts a my shared group to a shared group.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: ConvertSharedGroup
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: id
+          description: The group id.
+          in: path
+          required: true
+          type: integer
+          format: int32
+          maximum: 1000
+          minimum: 1
+        - name: data
+          description: The my shared group data.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SharedGroupDataDto'
+      responses:
+        '200':
+          description: The converted my group.
+          schema:
+            $ref: '#/definitions/SharedGroupDto'
+      deprecated: false
       
       
 definitions:
