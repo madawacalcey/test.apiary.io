@@ -710,21 +710,28 @@ paths:
           in: path
           required: true
           type: string
-        - name: groupdata
+        - name: groupData
           description: The information of the group to be created.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/CreateGroupDto'
+            $ref: '#/definitions/GroupDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '201':
           description: The details of the created group.
           schema:
-            $ref: '#/definitions/GroupDto'
+            $ref: '#/definitions/GroupResponseDto'
+        '400':
+          description: Thrown if a parameter is invalid.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
-  '/api/{version}/Groups/{typeList}':
     get:
-      summary: Get Groups
+      summary: Retrive Requested Groups
       description: Gets the groups with the provided types. Favourites and Quick Groups are not returned.
       security:
         - Bearer: []
@@ -743,20 +750,55 @@ paths:
           in: path
           required: true
           type: string
-        - name: typeList
-          description: A comma separated list of group type ids.
-          in: path
+        - name: filter.groupTypes
+          description: Types of groups.
+          in: query
           required: true
           type: string
+        - name: filter.isPaginate
+          description: Is paginate.
+          in: query
+          required: false
+          type: integer
+          format: int32
+          maximum: 1
+          minimum: 0
+        - name: filter.offset
+          description: Number of records to be omitted from starting index.
+          in: query
+          required: false
+          type: integer
+          format: int32
+          maximum: 1
+          minimum: 0
+        - name: filter.limit
+          description: Number of records to be displayed.
+          in: query
+          required: false
+          type: integer
+          format: int32
+          maximum: 2147483647
+          minimum: 1
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The details of the retrieved groups.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/GroupDto'
+            $ref: '#/definitions/WebClientGroupDto'
+        '400':
+          description: Thrown if a parameter is invalid.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '404':
+          description: |
+            Thrown if groups not associated to user or the group type is invalid or unsupported.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
-  '/api/{version}/Groups/{id}':
+  '/api/{version}/Groups/{groupUniqueId}':
     get:
       summary: Get Group
       description: Gets the group with the provided id.
@@ -777,29 +819,45 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
+          type: string
+        - name: groupData
+          description: The information of the group to be created.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The details of the retrieved group.
           schema:
-            $ref: '#/definitions/GroupDto'
+            $ref: '#/definitions/GroupResponseDto'
+        '404':
+          description: Thrown if no group found for the specified group unique id or invalid group unique id.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
     put:
       summary: Edit Group
-      description: Edits the group with the provided id and data.
+      description: Edits the group with the provided id and name.
       security:
         - Bearer: []
       tags:
         - Groups
       operationId: EditGroup
-      consumes: []
+      consumes:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
       produces:
         - application/json
         - text/json
@@ -811,27 +869,34 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
-        - name: groupdata
+          type: string
+        - name: groupData
           description: The information of the group to be updated.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/EditGroupDto'
+            $ref: '#/definitions/GroupDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
-          description: Successfully updated group.
+          description: The details of the updated group.
           schema:
-            type: object
-            additionalProperties:
-              type: string
+            $ref: '#/definitions/GroupResponseDto'
+        '400':
+          description: Thrown if a parameter is invalid.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '404':
+          description: Thrown if no group found for the specified group unique id or invalid group unique id.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
     delete:
       summary: Delete Group
@@ -853,23 +918,26 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
+          type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: Successfully Deleted Group.
           schema:
-            type: object
-            additionalProperties:
-              type: string
+            $ref: '#/definitions/successMesage'
+        '404':
+          description: Thrown if no group found for the specified group unique id or invalid group unique id.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
-  '/api/{version}/Groups/{id}/Items':
+  '/api/{version}/Groups/{groupUniqueId}/Items':
     get:
       summary: Get Group Items
       description: Gets the items for the group with the provided id.
@@ -890,25 +958,59 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
+          required: true
+          type: string
+        - name: filter.isPaginate
+          description: Is paginate.
+          in: query
           required: true
           type: integer
           format: int32
-          maximum: 1000
-          minimum: 1
+          maximum: 1
+          minimum: 0
+        - name: filter.offset
+          description: Paginate offset.
+          in: query
+          required: true
+          type: integer
+          format: int32
+          maximum: 1
+          minimum: 0
+        - name: filter.limit
+          description: Paginate limit.
+          in: query
+          required: true
+          type: integer
+          format: int32
+          maximum: 1
+          minimum: 0
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The items for the group with the provided id.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/GroupItemDto'
+            $ref: '#/definitions/ItemGroupPaginatedResponseDto'
+        '404':
+          description: Thrown if group do not exist for the current user.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
     post:
       summary: Add Group Items
-      description: Adds the assets with the provided ids to the group with the provided id.
+      description: |
+        This endpoint add the item(s) into group related to a user.
+        User needs to provide a group unique id, client updated time stamp and a list of item ids.
+        Endpoint will throw an error on invalid item(s) or group unique id in the request.
+        User can not add item(s) into shared my group.
+        Client updated time stamp will validate less than current time stamp.
+        Asset ids list will also filter with basic validations as in Active, Hidden etc.
+        When user add folder id as a item id, only folder will be added if group is favorite. Otherwise all child asset(s) will be added(exclude folder(s)).
       security:
         - Bearer: []
       tags:
@@ -931,29 +1033,46 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
-        - name: data
+          type: string
+        - name: itemGroupDetails
           description: The item ids.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/GroupItemDataDto'
+            $ref: '#/definitions/ItemGroupRequestDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '201':
           description: The created group item.
           schema:
-            $ref: '#/definitions/GroupItemDto'
+            type: array
+            items:
+              $ref: '#/definitions/ItemGroupResponseDto'
+        '400':
+          description: Thrown on when add item(s) to not own shared my groups.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '404':
+          description: Thrown if groups do not exist for the current user.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
     delete:
       summary: Delete Group Items
-      description: Deletes the assets with the provided ids to the group with the provided id.
+      description: |
+        This endpoint delete item(s) from the group related to a user. 
+        User needs to provide a group unique id and list of item ids, 'isdeleteall'(optional query parameter). 
+        Endpoint will throw an error on invalid item(s) or item(s) not exist in the group or group unique id in the request.
+        User can not delete item(s) from shared my group.
+        'isdeleteall' default value is false. 
+        List of item ids not allowed if 'isdeleteall' value is false and user must put the list of item ids if 'isdeleteall' is true.
       security:
         - Bearer: []
       tags:
@@ -976,27 +1095,39 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
-        - name: data
-          description: The item ids.
-          in: body
+          type: boolean
+          enum: [true, false]
+        - name: itemGroupDetails.isDeleteAll
+          description: Should delete all items..
+          in: query
+          required: false
+          type: string
+        - name: itemGroupDetails.itemIds
+          description: Item ids to be deleted.
+          in: query
+          required: false
+          type: string
+        - name: Authorization
+          type: string
+          in: header
           required: true
-          schema:
-            $ref: '#/definitions/GroupItemDataDto'
       responses:
         '200':
           description: Successfully Deleted Message.
           schema:
-            type: object
-            additionalProperties:
-              type: string
+            $ref: '#/definitions/successMesage'
+        '400':
+          description: Thrown if a parameter is invalid.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '403':
+          description: Thrown if delete item(s) from not own shared my groups.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
   '/api/{version}/Groups/{id}/Items/UpdateOrder':
     post:
@@ -1037,17 +1168,29 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/GroupItemDataDto'
+            $ref: '#/definitions/ItemGroupSortRequestDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The updated group item.
           schema:
-            $ref: '#/definitions/GroupItemDto'
+            $ref: '#/definitions/WebClientGroupDto'
+        '400':
+          description: Thrown if a parameter is invalid.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '404':
+          description: Thrown if no group items found for the specified group unique id.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
   '/api/{version}/Groups/Favorites':
     get:
       summary: Get Favourite Group
-      description: Gets the user's favourite group.
+      description: This end point retrieve user's favorite group information which is created for particular user.
       security:
         - Bearer: []
       tags:
@@ -1065,16 +1208,20 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The user's favourite group.
           schema:
-            $ref: '#/definitions/FavouriteGroupDto'
+            $ref: '#/definitions/GroupResponseDto'
       deprecated: false
   '/api/{version}/Groups/QuickGroup':
     get:
       summary: Get Quick Groups
-      description: Gets the user's favourite groups.
+      description: This end point retrieve user's quick group information which is created for particular user.
       security:
         - Bearer: []
       tags:
@@ -1092,18 +1239,24 @@ paths:
           in: path
           required: true
           type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The user's quick groups.
           schema:
             type: array
             items:
-              $ref: '#/definitions/QuickGroupDto'
+              $ref: '#/definitions/GroupResponseDto'
       deprecated: false
-  '/api/{version}/Groups/Shared':
+  '/api/{version}/Groups/{groupUniqueId}/Shared':
     post:
       summary: Create Shared Group
-      description: Creates a shared group.
+      description: | 
+        The endpoint share the given group to the comunity, if the user's allow to share groups setting is enabled.
+        Any other user having common items shared in the group, will see the shared group.
       security:
         - Bearer: []
       tags:
@@ -1126,21 +1279,42 @@ paths:
           in: path
           required: true
           type: string
+        - name: groupUniqueId
+          description: The group unique id.
+          in: path
+          required: true
+          type: string
         - name: data
           description: The shared group data.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/SharedGroupDataDto'
+            $ref: '#/definitions/shareGroupRequestDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The created shared group.
           schema:
-            $ref: '#/definitions/SharedGroupDto'
+            $ref: '#/definitions/GroupResponseDto'
+        '400':
+          description: |
+            Thrown if a parameter is invalid or the requests contains group not owned by the user or invalid group unique id
+            or the user not allowed to share groups or no valid items associated to the group.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '403':
+          description: Thrown if the group sharing feature is not enabled for the organization.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
     put:
       summary: Remove Shared Group
-      description: Removes a shared group.
+      description: |
+        The endpoint removes a shared group from the comunity. If group share removed, a new group will be created with the same group name. 
+        And the unshared group will disappeared from other users shared group and from the users who consumed that group.
       security:
         - Bearer: []
       tags:
@@ -1163,24 +1337,44 @@ paths:
           in: path
           required: true
           type: string
+        - name: groupUniqueId
+          description: The group unique id.
+          in: path
+          required: true
+          type: string
         - name: data
           description: The shared group data.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/SharedGroupDataDto'
+            $ref: '#/definitions/GroupBaseDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
-          description: Successfully deleted message.
+          description: The newly createdunshared group.
           schema:
-            type: object
-            additionalProperties:
-              type: string
+            $ref: '#/definitions/GroupResponseDto'
+        '400':
+          description: |
+            Thrown if a parameter is invalid or the requests contains group not owned by the user or invalid group unique id or the user not allowed to share groups.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '403':
+          description: Thrown if the group sharing feature is not enabled for the organization.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
-  '/api/{version}/Groups/Shared/{id}/Consume':
+  '/api/{version}/Groups/{groupUniqueId}/Consume':
     post:
       summary: Consume Shared Group
-      description: Consumes a shared group as a my shared group.
+      description: |
+        The endpoing consumes a shared group and make it as a shared my group. 
+        If a group consumed, a new group will be created and a relashanship with the parent group will be created as a group setting,
+        with the setting name 'parentGroup' and value as the parent group unique id.
+        If the parent group user unshared the group, shared my group also will be disappeared.
       security:
         - Bearer: []
       tags:
@@ -1203,30 +1397,42 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
+          type: string
         - name: data
           description: The consumed my shared group.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/SharedGroupDataDto'
+            $ref: '#/definitions/GroupBaseDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The consumed shared my group.
           schema:
-            $ref: '#/definitions/SharedGroupDto'
+            $ref: '#/definitions/GroupResponseDto'
+        '400':
+          description: |
+            Thrown if a parameter is invalid or the requests contains group not owned by the user or invalid group unique id or the user not allowed to share groups.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '403':
+          description: Thrown if the group sharing feature is not enabled for the organization.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
-  '/api/{version}/Groups/Shared/{id}/Convert':
+  '/api/{version}/Groups/{groupUniqueId}/Convert':
     post:
       summary: Convert My Shared Group
-      description: Converts a my shared group to a my group.
+      description: | 
+        The endpoing converts a my shared group to a my group. When a my shared group converted, 
+        the parent group relationship will removed and the common items in the parent group will added to the converted group.
       security:
         - Bearer: []
       tags:
@@ -1249,25 +1455,35 @@ paths:
           in: path
           required: true
           type: string
-        - name: id
-          description: The group id.
+        - name: groupUniqueId
+          description: The group unique id.
           in: path
           required: true
-          type: integer
-          format: int32
-          maximum: 1000
-          minimum: 1
+          type: string
         - name: data
           description: The my shared group data.
           in: body
           required: true
           schema:
-            $ref: '#/definitions/SharedGroupDataDto'
+            $ref: '#/definitions/GroupBaseDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
       responses:
         '200':
           description: The converted my group.
           schema:
-            $ref: '#/definitions/SharedGroupDto'
+            $ref: '#/definitions/GroupResponseDto'
+        '400':
+          description: |
+            Thrown if a parameter is invalid or the requests contains group not owned by the user or invalid group unique id or the user not allowed to share groups.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '403':
+          description: Thrown if the group sharing feature is not enabled for the organization.
+          schema:
+            $ref: '#/definitions/ErrorDto'
       deprecated: false
       
 definitions:
@@ -1328,9 +1544,6 @@ definitions:
       token:
         type: string
         enum: [eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Imltc21hcnRAY2FsY2V5LmNvbSIsImN1cnJlbnR1c2VyLXR5cGUiOiJTeXN0ZW1BZG1pbiIsIm9yZ2FuaXphdGlvbl9jb2RlIjoibWFjcy1kZW1vIiwiYXBwbGljYXRpb25fc3ViZG9tYWluIjoiaW1zbWFydC1zdGFnaW5nIiwiYXBwbGljYXRpb25fZG9tYWluIjoiaW1zbWFydC1zdGFnaW5nLmNvbXBhcmVuZXR3b3Jrcy5jb20iLCJhcHBsaWNhdGlvbl9hcGlfYWxpYXMiOiJXZWJDbGllbnRBcGkiLCJhcHBsaWNhdGlvbl9zY2hlbWUiOiJodHRwcyIsImFwcGxpY2F0aW9uX3BvcnQiOiI0NDMiLCJpc3MiOiJpbXNtYXJ0LXN0YWdpbmcuY29tcGFyZW5ldHdvcmtzLmNvbSIsImF1ZCI6Imltc21hcnQtc3RhZ2luZyIsImV4cCI6MTQ5OTE4MDgxMiwibmJmIjoxNDk5MTUyMDEyfQ.pGK2SPpGcFOMQUEohyQjiTM6IrPfmUmQsxDvoJK4cVU]
-  Object:
-    type: object
-    properties: {}
   ItemDto:
     type: object
     required:
@@ -2005,19 +2218,314 @@ definitions:
     uniqueItems: true
   GroupDto:
     type: object
-  CreateGroupDto:
+    required:
+      - Name
+      - ClientUpdatedTimestamp
+    properties:
+      Name:
+        type: string
+        enum: [Group 1, Group 2, Group 3, Group 4, Group 5, Group 6, Group 7]
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+  GroupTypesDto:
     type: object
-  EditGroupDto:
+    required:
+      - groupTypes
+      - IsPaginate
+      - Offset
+      - Limit
+    properties:
+      groupTypes:
+        type: string
+      IsPaginate:
+        type: integer
+        format: int32
+        maximum: 1
+        minimum: 0
+      Offset:
+        type: integer
+        format: int32
+        maximum: 2147483647
+        minimum: 0
+      Limit:
+        type: integer
+        format: int32
+        maximum: 2147483647
+        minimum: 1
+  GroupSortRequestDto:
     type: object
-  GroupItemDto:
+    required:
+      - Groups
+      - ClientUpdatedTimestamp
+    properties:
+      Groups:
+        type: array
+        items:
+          type: string
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+  ItemGroupSortRequestDto:
     type: object
-  GroupItemDataDto:
+    required:
+      - GroupItems
+      - ClientUpdatedTimestamp
+    properties:
+      GroupItems:
+        type: array
+        items:
+          type: integer
+          format: int32
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+  ItemGroupRequestDto:
     type: object
-  FavouriteGroupDto:
+    required:
+      - ItemIds
+      - ClientUpdatedTimestamp
+    properties:
+      ItemIds:
+        type: array
+        items:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 2147483647
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+  PaginationRequestDto:
     type: object
-  QuickGroupDto:
+    required:
+      - IsPaginate
+      - Offset
+      - Limit
+    properties:
+      IsPaginate:
+        type: integer
+        format: int32
+        maximum: 1
+        minimum: 0
+      Offset:
+        type: integer
+        format: int32
+        maximum: 100
+        minimum: 0
+      Limit:
+        type: integer
+        format: int32
+        maximum: 100
+        minimum: 1
+  ItemGroupRequestBaseDto:
     type: object
-  SharedGroupDto:
+    required:
+      - DeleteAll
+      - ItemIds
+    properties:
+      DeleteAll:
+        type: boolean
+        enum: [true, false]
+      ItemIds:
+        type: array
+        items:
+          type: integer
+          format: int32
+  GroupBaseDto:
     type: object
-  SharedGroupDataDto:
+    required:
+      - ClientUpdatedTimestamp
+    properties:
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+  shareGroupRequestDto:
     type: object
+    required:
+      - ClientUpdatedTimestamp
+    properties:
+      GroupDescription:
+        type: string
+        enum: [Group description 1, Group description 2, Group description 3, Group description 4, Group description 5, Group description 6, Group description 7]
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+  GroupResponseDto:
+    type: object
+    required:
+      - GroupUniqueId
+      - Name
+      - GroupOrder
+      - UserId
+      - GroupType
+      - ClientUpdatedTimestamp
+      - ServerUpdatedTimestamp
+      - Created
+      - Modified
+      - OwnerName
+    properties:
+      GroupUniqueId:
+        type: string
+        enum: [DD6B6CDD-43CE-4B97-8255-0000B1B8E748, DD6B6CDD-43CE-4B97-8255-0000B1B8E749, DD6B6CDD-43CE-4B97-8255-0000B1B8E720, E39B624E-FB67-4DC1-B869-60BFF0EC1B8A, AS6B6CDD-43CE-4B97-8255-0000B1C8E748, PQ6B6CDD-43CE-4B97-8255-0000B1C8E748]
+      Name:
+        type: string
+        enum: [Group 1, Group 2, Group 3, Group 4, Group 5, Group 6, Group 7]
+      GroupOrder:
+        format: int32
+        type: integer
+        enum: [512, 1024, 1536, 2048, 2560]
+      UserId:
+        format: int32
+        type: integer
+        maximum: 10000
+        minimum: 1000
+      GroupType:
+        type: string
+        enum: [0, 1, 2, 3, 4]
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+      ServerUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+      Modified:
+        format: date-time
+        type: string
+      Created:
+        format: date-time
+        type: string
+      OwnerName:
+        type: string
+        enum: [User 1, User 2, User 3, User 4, User 5, User 6, User 7]
+  ItemGroupResponseDto:
+    type: object
+    required:
+      - ItemId
+      - ItemOrder
+      - Created
+      - Modified
+      - ClientUpdatedTimestamp
+      - ServerUpdatedTimestamp
+      - Item
+    properties:
+      UniqueId:
+        type: string
+        enum: [DD6B6CDD-43CE-4B97-8255-0000B1B8E748, DD6B6CDD-43CE-4B97-8255-0000B1B8E749, DD6B6CDD-43CE-4B97-8255-0000B1B8E720, E39B624E-FB67-4DC1-B869-60BFF0EC1B8A, AS6B6CDD-43CE-4B97-8255-0000B1C8E748, PQ6B6CDD-43CE-4B97-8255-0000B1C8E748]
+      GroupUniqueId:
+        type: string
+        enum: [E39B624E-FB67-4DC1-B869-60BFF0EC1B8A, DD6B6CDD-43CE-4B97-8255-0000B1B8E748, ED6B6CDD-43CE-4B97-8255-0000B1B8E741, DD6B6CDD-43CE-4B97-8255-0000B1B8E720, CD6B6CDD-43CE-4B97-8255-0000B1B8E748, DD6B6CDD-43CE-4B97-8255-0000B1B8E749]
+      ItemId:
+        format: int32
+        type: integer
+        maximum: 100
+        minimum: 1
+      ItemOrder:
+        format: int32
+        type: integer
+        maximum: 100
+        minimum: 1
+      Modified:
+        format: date-time
+        type: string
+      Created:
+        format: date-time
+        type: string
+      ClientUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+      ServerUpdatedTimestamp:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+      Item:
+        $ref: '#/definitions/ItemBaseDto'
+  ItemGroupPaginatedResponseDto:
+    required:
+      - GroupItems
+      - Total
+    properties:
+      GroupItems:
+        type: array
+        items:
+          $ref: '#/definitions/ItemGroupResponseDto'
+      Total:
+        type: integer
+        format: int64
+        maximum: 2147483647
+        minimum: 1
+  WebClientGroupDto:
+    required:
+      - Groups
+      - Total
+    properties:
+      Groups:
+        type: array
+        items:
+          $ref: '#/definitions/GroupResponseDto'
+      Total:
+        type: integer
+        format: int32
+        maximum: 2147483647
+        minimum: 0
+  successMesage:
+    type: object
+    required:
+      - Message
+    properties:
+      Message:
+        type: string
+        enum: [Successfully Deleted.]
+  ItemBaseDto:
+    type: object
+    required:
+      - ItemId
+      - ItemType
+      - FileType
+      - Title
+      - Description
+      - IconImageName
+      - IsFavorite
+    properties:
+      ItemId:
+        format: int32
+        type: integer
+        minimum: 10
+        maximum: 100
+      Title:
+        type: string
+        enum: [Mock Item A, Mock Item B, Mock Item C, Mock Item D, Mock Item E]
+      ItemType:
+        format: int32
+        type: integer
+        minimum: 1
+        maximum: 4
+      FileType:
+        type: string
+        enum: [mp4, mpv, 3gp, mov, m4v, flv, mp3, m4a, m4r, au, wav, bmp, gif, tif, png, jpg, jpeg, xlsx, xlsm, xlsb, xls, xlm pps, pptx, ppt,csv, pdf, txt, key, epub, ibooks]
+      IconImageName:
+        type: string
+        enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973_icon, 50410c14-c6b2-46e5-b24b-c801eee4fe69_icon, 44a2cd69-25bb-41b5-9148-af88c4cc4e64_icon, 40ce5475-89c1-4a74-bdf0-5862320ea144_icon, fb65cb34-4131-417b-9621-89ccab884ee5_icon]
+      IsFavorite:
+        type: boolean
+        enum: [true, false]
+      Description:
+        type: string
+        enum: [Mock Item A Description, Mock Item B Description, Mock Item C Description, Mock Item D Description, Mock Item E Description]
