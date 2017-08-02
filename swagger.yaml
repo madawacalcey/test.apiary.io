@@ -732,7 +732,7 @@ paths:
       deprecated: false
     get:
       summary: Retrive Requested Groups
-      description: Gets the groups with the provided types. Favourites and Quick Groups are not returned.
+      description: Gets the groups with the provided types. Favourite and Quick Groups are not returned.
       security:
         - Bearer: []
       tags:
@@ -750,12 +750,12 @@ paths:
           in: path
           required: true
           type: string
-        - name: filter.groupTypes
+        - name: groupTypes
           description: Types of groups.
           in: query
           required: true
           type: string
-        - name: filter.isPaginate
+        - name: isPaginate
           description: Is paginate.
           in: query
           required: false
@@ -763,7 +763,7 @@ paths:
           format: int32
           maximum: 1
           minimum: 0
-        - name: filter.offset
+        - name: offset
           description: Number of records to be omitted from starting index.
           in: query
           required: false
@@ -771,7 +771,7 @@ paths:
           format: int32
           maximum: 1
           minimum: 0
-        - name: filter.limit
+        - name: limit
           description: Number of records to be displayed.
           in: query
           required: false
@@ -963,7 +963,7 @@ paths:
           in: path
           required: true
           type: string
-        - name: filter.isPaginate
+        - name: isPaginate
           description: Is paginate.
           in: query
           required: true
@@ -971,7 +971,7 @@ paths:
           format: int32
           maximum: 1
           minimum: 0
-        - name: filter.offset
+        - name: offset
           description: Paginate offset.
           in: query
           required: true
@@ -979,7 +979,7 @@ paths:
           format: int32
           maximum: 1
           minimum: 0
-        - name: filter.limit
+        - name: limit
           description: Paginate limit.
           in: query
           required: true
@@ -1101,12 +1101,12 @@ paths:
           required: true
           type: boolean
           enum: [true, false]
-        - name: itemGroupDetails.isDeleteAll
+        - name: isDeleteAll
           description: Should delete all items..
           in: query
           required: false
           type: string
-        - name: itemGroupDetails.itemIds
+        - name: itemIds
           description: Item ids to be deleted.
           in: query
           required: false
