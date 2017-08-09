@@ -731,7 +731,7 @@ paths:
             $ref: '#/definitions/ErrorDto'
       deprecated: false
     get:
-      summary: Retrive Requested Groups
+      summary: Retrieve Requested Groups
       description: Gets the groups with the provided types. Favourite and Quick Groups are not returned.
       security:
         - Bearer: []
@@ -753,9 +753,9 @@ paths:
         - name: groupTypes
           description: Types of groups.
           in: query
-          required: true
+          required: false
           type: string
-        - name: isPaginate
+        - name: DisablePaginate
           description: Is paginate.
           in: query
           required: false
@@ -963,10 +963,10 @@ paths:
           in: path
           required: true
           type: string
-        - name: isPaginate
+        - name: DisablePaginate
           description: Is paginate.
           in: query
-          required: true
+          required: false
           type: integer
           format: int32
           maximum: 1
@@ -974,7 +974,7 @@ paths:
         - name: offset
           description: Paginate offset.
           in: query
-          required: true
+          required: false
           type: integer
           format: int32
           maximum: 1
@@ -982,7 +982,7 @@ paths:
         - name: limit
           description: Paginate limit.
           in: query
-          required: true
+          required: false
           type: integer
           format: int32
           maximum: 1
@@ -1099,13 +1099,15 @@ paths:
           description: The group unique id.
           in: path
           required: true
-          type: boolean
-          enum: [true, false]
+          type: string
         - name: isDeleteAll
-          description: Should delete all items..
+          description: Should delete all items.
           in: query
           required: false
-          type: string
+          type: integer
+          format: int32
+          maximum: 1
+          minimum: 0
         - name: itemIds
           description: Item ids to be deleted.
           in: query
@@ -2234,13 +2236,13 @@ definitions:
     type: object
     required:
       - groupTypes
-      - IsPaginate
+      - DisablePaginate
       - Offset
       - Limit
     properties:
       groupTypes:
         type: string
-      IsPaginate:
+      DisablePaginate:
         type: integer
         format: int32
         maximum: 1
@@ -2305,11 +2307,11 @@ definitions:
   PaginationRequestDto:
     type: object
     required:
-      - IsPaginate
+      - DisablePaginate
       - Offset
       - Limit
     properties:
-      IsPaginate:
+      DisablePaginate:
         type: integer
         format: int32
         maximum: 1
