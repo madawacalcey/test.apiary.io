@@ -1131,6 +1131,56 @@ paths:
           schema:
             $ref: '#/definitions/ErrorDto'
       deprecated: false
+  '/api/{version}/Groups/UpdateOrder':
+    post:
+      summary: Update Groups Order
+      description: Updates the order of the groups.
+      security:
+        - Bearer: []
+      tags:
+        - Groups
+      operationId: UpdateGroupsOrder
+      consumes: 
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: groupsRequest
+          description: List of group ids.
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupSortRequestDto'
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+      responses:
+        '200':
+          description: The updated group id order.
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [0e72f8f7-324d-440e-ae08-f2a4c331a973, 50410c14-c6b2-46e5-b24b-c801eee4fe69, 44a2cd69-25bb-41b5-9148-af88c4cc4e64, 40ce5475-89c1-4a74-bdf0-5862320ea144, fb65cb34-4131-417b-9621-89ccab884ee5]
+              uniqueItems: true
+        '400':
+          description: Thrown if a parameter is invalid or the group list does not match the existing group list.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+      deprecated: false
   '/api/{version}/Groups/{id}/Items/UpdateOrder':
     post:
       summary: Update Group Items Order
@@ -1139,7 +1189,7 @@ paths:
         - Bearer: []
       tags:
         - Groups
-      operationId: AddGroupItems
+      operationId: UpdateItemsOrder
       consumes: 
         - application/json
         - text/json
@@ -1179,7 +1229,13 @@ paths:
         '200':
           description: The updated group item.
           schema:
-            $ref: '#/definitions/WebClientGroupDto'
+            type: array
+            items:
+              format: int32
+              type: integer
+              maximum: 1000
+              minimum: 1
+              uniqueItems: true
         '400':
           description: Thrown if a parameter is invalid.
           schema:
