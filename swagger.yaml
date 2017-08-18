@@ -390,7 +390,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ItemFiltersDto'
+            $ref: '#/definitions/ItemSearchDto'
         - name: version
           description: The API version to be used to get the data.
           in: path
@@ -414,7 +414,7 @@ paths:
     post:
       summary: Library
       description: |
-        Gets items matching the filter criteria, from the items associated to the current user
+        Gets items matching the filter criteria, from the items associated to the current user.
         
         Total denotes the total number of results for the search parameters.
       security:
@@ -439,7 +439,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ItemFiltersLibraryDto'
+            $ref: '#/definitions/ItemFiltersDto'
         - name: version
           description: The API version to be used to get the data.
           in: path
@@ -497,6 +497,94 @@ paths:
             $ref: '#/definitions/ItemRelatedDto'
         '403':
           description: Thrown if the authorized user has no access to the specified segment.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+      deprecated: false
+  '/api/{version}/Items/RetrieveShareLinkForAssets':
+    get:
+      summary: Gets the share links for assets
+      description: Gets the share links for provided assets Ids.
+      security:
+        - Bearer: []
+      tags:
+        - Items
+      operationId: RetrieveShareLinkForAssets
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: itemIds
+          description: The item Id list.
+          in: query
+          required: true
+          type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+      responses:
+        '200':
+          description: List of share link for given items.
+          schema:
+            $ref: '#/definitions/ItemShareLinkCollectionDto'
+        '404':
+          description: Thrown if the specified item ids don't belong to the user.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '400':
+          description: Thrown if the parameter is invalid.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+      deprecated: false
+  '/api/{version}/Items/RetrieveLinksForItems':
+    get:
+      summary: Gets the links for items
+      description: Gets the links for provided item Ids.
+      security:
+        - Bearer: []
+      tags:
+        - Items
+      operationId: RetrieveLinksForItems
+      consumes: []
+      produces:
+        - application/json
+        - text/json
+        - application/xml
+        - text/xml
+      parameters:
+        - name: version
+          description: The API version to be used to get the data.
+          in: path
+          required: true
+          type: string
+        - name: itemIds
+          description: The item Id list.
+          in: query
+          required: true
+          type: string
+        - name: Authorization
+          type: string
+          in: header
+          required: true
+      responses:
+        '200':
+          description: List of links for given items.
+          schema:
+            $ref: '#/definitions/ItemLinkCollectionDto'
+        '404':
+          description: Thrown if the specified item ids don't belong to the user.
+          schema:
+            $ref: '#/definitions/ErrorDto'
+        '400':
+          description: Thrown if the parameter is invalid.
           schema:
             $ref: '#/definitions/ErrorDto'
       deprecated: false
@@ -1940,12 +2028,18 @@ definitions:
   ItemDownloadLinkDto:
     type: object
     required:
+      - ItemId
       - AssetTitle
       - AllowToEmail
       - Shareable
       - AssetLink
       - ExpiryDate
     properties:
+      ItemId:
+        format: int32
+        type: integer
+        maximum: 1000
+        minimum: 1
       AssetLink:
         type: string
         enum: [https://<VerticalSubdomain>.comparenetworks.com/Files?id=1234&ts=1499131806&sig=gRZd0f65dIAmxYPhlNPUlhpH3sw%3d]
@@ -2199,17 +2293,19 @@ definitions:
         type: string
     minItems: 1
     uniqueItems: true
-  ItemFiltersDto:
+  ItemSearchDto:
     type: object
     required:
-      - SegmentIds
+      - ParentIds
       - FileTypes
       - Tags
       - SearchText
       - StartIndex
       - PageSize
+      - SortBy
+      - SortOrder
     properties:
-      SegmentIds:
+      ParentIds:
         type: array
         items:
           type: integer
@@ -2238,9 +2334,15 @@ definitions:
         type: integer
         maximum: 100
         minimum: 1
+      SortBy:
+        type: string
+        enum: [Title, Size, Created, Modified, FeaturedTitle]
+      SortOrder:
+        type: string
+        enum: [Asce, Desc]
     minItems: 1
     uniqueItems: true
-  ItemFiltersLibraryDto:
+  ItemFiltersDto:
     type: object
     required:
       - FileTypes
@@ -2248,6 +2350,8 @@ definitions:
       - ShowFolder
       - StartIndex
       - PageSize
+      - SortBy
+      - SortOrder
     properties:
       FileTypes:
         type: array
@@ -2273,6 +2377,12 @@ definitions:
         type: integer
         maximum: 100
         minimum: 1
+      SortBy:
+        type: string
+        enum: [Title, Size, Created, Modified, FeaturedTitle]
+      SortOrder:
+        type: string
+        enum: [Asce, Desc]
     minItems: 1
     uniqueItems: true
   GroupDto:
@@ -2590,3 +2700,30 @@ definitions:
       Description:
         type: string
         enum: [Mock Item A Description, Mock Item B Description, Mock Item C Description, Mock Item D Description, Mock Item E Description]
+  ItemShareLinkCollectionDto:
+    required:
+      - ItemDownloadLinks
+    properties:
+      ItemDownloadLinks:
+        type: array
+        items:
+          $ref: '#/definitions/ItemDownloadLinkDto'
+  ItemLinkCollectionDto:
+    required:
+      - ItemLinks
+    properties:
+      ItemLinks:
+        type: array
+        items:
+          $ref: '#/definitions/ItemLinkExtendedDto'
+  ItemLinkExtendedDto:
+    required:
+      - ItemId
+    allOf:
+      - $ref: '#/definitions/ItemLinkDto'
+      - properties:
+          ItemId:
+            format: int32
+            type: integer
+            minimum: 10
+            maximum: 100
