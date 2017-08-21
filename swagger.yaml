@@ -2339,7 +2339,7 @@ definitions:
         enum: [Title, Size, Created, Modified, FeaturedTitle]
       SortOrder:
         type: string
-        enum: [Asce, Desc]
+        enum: [Asc, Desc]
     minItems: 1
     uniqueItems: true
   ItemFiltersDto:
@@ -2382,7 +2382,7 @@ definitions:
         enum: [Title, Size, Created, Modified, FeaturedTitle]
       SortOrder:
         type: string
-        enum: [Asce, Desc]
+        enum: [Asc, Desc]
     minItems: 1
     uniqueItems: true
   GroupDto:
