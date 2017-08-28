@@ -2296,7 +2296,7 @@ definitions:
   ItemSearchDto:
     type: object
     required:
-      - ParentIds
+      - ItemIds
       - FileTypes
       - Tags
       - SearchText
@@ -2305,7 +2305,7 @@ definitions:
       - SortBy
       - SortOrder
     properties:
-      ParentIds:
+      ItemIds:
         type: array
         items:
           type: integer
