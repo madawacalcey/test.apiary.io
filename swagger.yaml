@@ -365,7 +365,7 @@ paths:
     post:
       summary: Search
       description: |
-        Performs a search based on the provided search criteria on the items associated to the authenticated user.
+        Performs a search based on the provided search criteria on the items associated to the authenticated user. Items can be either Segments, Folders or Assets. Search will be performed on the given Item(s) and its child Items(s). 
         
         Total denotes the total number of results for the search parameters.
       security:
