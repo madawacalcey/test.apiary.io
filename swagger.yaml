@@ -215,20 +215,20 @@ paths:
           schema:
             $ref: '#/definitions/AccessibilityStatus'
       deprecated: false
-  '/api/{version}/Items/{itemId}/CreateCrocodocSession':
+  '/api/{version}/Items/{itemId}/CreateBoxPreviewSession':
     get:
-      summary: Get Crocodoc Session
+      summary: Get Box preview Session
       description: |
-        Gets a created Crocodoc session for the item which match with the provided item id.
-        A session will only be created if the status is either PROCESSING or DONE. 
-        A crocodoc document status may change to ERROR from PROCESSING in the event that processing fails.
-        The UUID denotes the unique crocodoc id.
-        The Error is populated only when the Status is ERROR.
+        Gets a created Box preview session for the item which matches the provided item id.
+        A session will only be created if the status is None, Pending, Viewable or Success. 
+        A box document status may change to Error from Pending in the event that processing fails.
+        The UUID denotes the unique box id.
+        The error is populated only when the Status is Error.
       security:
         - Bearer: []
       tags:
         - Items
-      operationId: CreateCrocodocSession
+      operationId: CreateBoxPreviewSession
       consumes: []
       produces:
         - application/json; charset=utf-8
@@ -237,7 +237,7 @@ paths:
         - text/xml
       parameters:
         - name: itemId
-          description: The item id for the Crocodoc session, id value should be greater than 0.
+          description: The item id for the box preview session, id value should be greater than 0.
           in: path
           required: true
           type: integer
@@ -256,13 +256,13 @@ paths:
         '200':
           description: Successful response.
           schema:
-            $ref: '#/definitions/ItemCrocodocSessionDto'
+            $ref: '#/definitions/ItemBoxPreviewSessionDto'
         '400':
           description: Thrown if the item file type is not supported.
           schema:
             $ref: '#/definitions/ErrorDto'
         '204':
-          description: Returned if the item has no cotent, or if the crocodoc encountered an error when processing the file.
+          description: Returned if the item has no cotent, or if the box encountered an error when processing the file.
           schema:
             $ref: '#/definitions/ErrorDto'
         '404':
@@ -2191,7 +2191,7 @@ definitions:
         description: The organization name.
         type: string
         enum: [3M Customer Connect, 3M Sales Aid, Agilent, Bio-Techne, Ecolab]
-  ItemCrocodocSessionDto:
+  ItemBoxPreviewSessionDto:
     type: object
     required:
       - Uuid
@@ -2206,13 +2206,13 @@ definitions:
         format: uuid
         enum: [a061a450-608d-11e7-907b-a6006ad3dba0]
       Session:
-        description: Crocodoc session for the asset.
+        description: Box preview session for the asset.
         type: string
         enum: [5ARHVtko5ouhylU_2Z_Uv0aMw5JvhYckfRH2gHPNQX_c4uL4F3MBZ9PgxQRmx13tUMc-w12-bRv5nQuMl28kAZYJEnfdQmpQKs4-3xNMn9F0jND0YWh_C2xqRczt]
       Status:
         description: Status of asset. 
         type: string
-        enum: [DONE,PROCESSING]
+        enum: [Success,Pending]
       Viewable:
         description: Viewable state of asset
         type: boolean
